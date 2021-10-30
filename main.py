@@ -16,6 +16,9 @@ pen = ImageDraw.Draw(img)
 
 last_point = (0, 0)
 
+teks = tk.StringVar()
+label = tk.Label(window, textvariable=teks)
+
 def draw_img(event):
     global last_point, tkimg
     current_point = (event.x, event.y)
@@ -29,17 +32,18 @@ def draw_img(event):
     img_temp = img_temp.flatten()
     output = model.predict([img_temp])
     if(output[0] == 0):
-        print("kotak")
+        teks.set("kotak")
     elif(output[0] == 1):
-        print("lingkaran")
+        teks.set("lingkaran")
     elif(output[0] == 2):
-        print("segitiga")
+        teks.set("segitiga")
     elif(output[0] == 3):
-        print("centang")
+        teks.set("centang")
     elif(output[0] == 4):
-        print("silang")
+        teks.set("silang")
     else:
-        print("ERROR")
+        teks.set("ERROR")
+    label.pack()
 
 def start_draw(event):
     global last_point
@@ -60,7 +64,7 @@ centang = 0
 silang = 0
 
 def save_img(event):
-    global kotak, lingkaran, segitiga, centang, silang
+    global kotak, lingkaran, segitiga, centang, silang, teks
     img_temp = img.resize((28, 28))
     if(event.char == "k"):
         img_temp.save(f"kotak/{kotak}.png")
@@ -83,5 +87,7 @@ window.bind("<B1-Motion>", draw_img)
 window.bind("<ButtonPress-1>", start_draw)
 window.bind("<ButtonPress-3>", reset_canvas)
 window.bind("<Key>", save_img)
+
+label.pack()
 
 window.mainloop()
