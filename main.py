@@ -41,6 +41,8 @@ def draw_img(event):
         teks.set("centang")
     elif(output[0] == 4):
         teks.set("silang")
+    elif(output[0] == 5):
+        teks.set("love")
     else:
         teks.set("ERROR")
     label.pack()
@@ -62,9 +64,10 @@ segitiga = 0
 lingkaran = 0
 centang = 0
 silang = 0
+love = 0
 
 def save_img(event):
-    global kotak, lingkaran, segitiga, centang, silang, teks
+    global kotak, lingkaran, segitiga, centang, silang, love, teks
     img_temp = img.resize((28, 28))
     if(event.char == "k"):
         img_temp.save(f"kotak/{kotak}.png")
@@ -81,6 +84,9 @@ def save_img(event):
     elif(event.char == "i"):
         img_temp.save(f"silang/{silang}.png")
         silang += 1
+    elif(event.char == "o"):
+        img_temp.save(f"love/{love}.png")
+        love += 1
 
 
 window.bind("<B1-Motion>", draw_img)
